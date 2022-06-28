@@ -33,7 +33,7 @@ float tds_val = 0;
 float wtemp = 0;
 float ph_act = 0;
 
-OneWire           oneWire(D3);
+OneWire           oneWire(D5);
 DallasTemperature dallas(&oneWire);
 Adafruit_ADS1115  ads;
 
@@ -53,7 +53,7 @@ void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   
   // Waterflow
-  attachInterrupt(digitalPinToInterrupt(14), pulse, RISING);
+  attachInterrupt(digitalPinToInterrupt(13), pulse, RISING);
 
   // Time of Flight  
   if (!lox.begin()) {
@@ -68,7 +68,6 @@ void setup() {
   dallas.begin();
 
   pinMode(D6, OUTPUT);
-  pinMode(D7, OUTPUT);
 
   // WiFi
   WiFi.begin(SSID, PASS);
@@ -122,7 +121,6 @@ void loop() {
   if (count == PERIOD-1) {
     // turn on TDS/pH sensor
     digitalWrite(D6, HIGH);
-    digitalWrite(D7, HIGH);
   }
       
   if (count == PERIOD) {
@@ -158,7 +156,6 @@ void loop() {
       count = 0;
       // turn off TDS/pH sensor
       digitalWrite(D6, LOW);
-      digitalWrite(D7, LOW);
     }
 
   // TDS Meter
